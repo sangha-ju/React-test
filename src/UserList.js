@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 const User = React.memo(function User({ user, onRemove, onToggle }) {
   const { username, email, id, active } = user;
 
-  useEffect(() => {
-    console.log("user 값이 설정 됨");
-    console.log(user);
-    return () => {
-      console.log("user 값이 바뀌기 전");
-      console.log("user 값이 설정 됨");
-    };
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user 값이 설정 됨");
+  //   console.log(user);
+  //   return () => {
+  //     console.log("user 값이 바뀌기 전");
+  //     console.log("user 값이 설정 됨");
+  //   };
+  // }, [user]);
 
   return (
     <div>
