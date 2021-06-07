@@ -1,13 +1,6 @@
-import React, {
-  useReducer,
-  useMemo,
-  useCallback,
-  useRef,
-  createContext,
-} from "react";
+import React, { useReducer, useMemo, useCallback, createContext } from "react";
 import CreateUser from "./CreateUsers";
 import UserList from "./UserList";
-import useInputs from "./useInputs";
 
 const initialState = {
   users: [
@@ -36,7 +29,6 @@ function reducer(state, action) {
   switch (action.type) {
     case "CREATE_USER":
       return {
-        inputs: initialState.inputs,
         users: state.users.concat(action.user),
       };
     case "TOGGLE_USER":
@@ -61,25 +53,6 @@ export const UserDispatch = createContext(null);
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { users } = state;
-  const nextId = useRef(4);
-  const [form, onChange, reset] = useInputs({
-    username: "",
-    email: "",
-  });
-  const { username, email } = form;
-
-  const onCreate = useCallback(() => {
-    dispatch({
-      type: "CREATE_USER",
-      user: {
-        id: nextId.current,
-        username,
-        email,
-      },
-    });
-    nextId.current += 1;
-    reset();
-  }, [username, email, reset]);
 
   const countActiveUsers = (users) => {
     console.log("활성 사용자 수 세는 중...");
@@ -90,12 +63,7 @@ function App() {
 
   return (
     <UserDispatch.Provider value={dispatch}>
-      <CreateUser
-        username={username}
-        email={email}
-        onChange={onChange}
-        onCreate={onCreate}
-      />
+      <CreateUser />
       <UserList users={users} />
       <div>활성 사용자 수: {count}</div>
     </UserDispatch.Provider>
